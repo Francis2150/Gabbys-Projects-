@@ -1,0 +1,22 @@
+
+
+input[type="number"], input[type="text"], input[type="email"], input[type="tel"] {
+  padding: 0.5rem;
+  margin: 0.3rem 0;
+  width: 100%;
+}
+.btn {
+  background: #cc0066;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+.btn:hover {
+  background: #99004d;
+}
+#cart-items div {
+ 
+}
