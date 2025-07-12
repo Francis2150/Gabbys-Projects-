@@ -1,4 +1,5 @@
 let cart = [];
+const imageBaseURL = "https://francis2150.github.io/Gabbys-Projects-/";
 
 // Add to cart function
 function addToCart(name, price, quantity, imageUrl) {
@@ -35,7 +36,7 @@ function renderCart() {
 
     const itemHTML = `
       <div class="cart-item">
-        <img src="${item.image}" width="40" height="40" style="vertical-align:middle; border-radius:4px; margin-right:8px;" />
+        <img src="${imageBaseURL + item.image}" width="40" height="40" style="vertical-align:middle; border-radius:4px; margin-right:8px;" />
         <span>${item.name}</span> - GHS ${(item.price / 100).toFixed(2)} × ${item.quantity} = <strong>GHS ${(subtotal / 100).toFixed(2)}</strong>
         <button onclick="removeFromCart(${index})" style="color:red; float:right;">Remove</button>
       </div>
@@ -72,7 +73,10 @@ document.getElementById("checkoutForm").addEventListener("submit", (e) => {
   let message = `🛒 *New Order*%0A-------------------%0A`;
 
   cart.forEach(item => {
-    const fullImageUrl = `${location.origin}/${item.image}`;
+    const fullImageUrl = item.image.startsWith("http")
+      ? item.image
+      : imageBaseURL + item.image;
+
     message += `• ${item.name} - GHS ${(item.price / 100).toFixed(2)} × ${item.quantity}%0A📷 Image: ${fullImageUrl}%0A%0A`;
   });
 
