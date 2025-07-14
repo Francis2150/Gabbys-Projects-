@@ -12,5 +12,40 @@
   <button id="addProductBtn">Add Product</button>
 
   <div id="productList"></div>
+
+   <script type="module">
+  import { db } from './scripts/firebase-config.js';
+  import { addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const products = [
+    { name: "Men's Running Shoes", price: 12000, image: "images/p1.jpg" },
+    { name: "Women's Sneakers", price: 9500, image: "images/p2b.webp" },
+    { name: "Cocoa Butter Cream", price: 8000, image: "images/p3.webp" },
+    { name: "Casual Loafers", price: 7500, image: "images/p4.avif" },
+    { name: "Ladies’ Flats", price: 6500, image: "images/p5.jpg" },
+    { name: "Leather Boots", price: 15000, image: "images/p6.jpg" },
+    { name: "Men's Sandals", price: 4000, image: "images/p7.jpg" },
+    { name: "Kids' Sports Shoes", price: 5500, image: "images/p8.webp" },
+    { name: "Formal Dress Shoes", price: 13000, image: "images/p9.jpeg" },
+    { name: "Men’s Slippers", price: 4500, image: "images/p10.avif" },
+    { name: "Ankle Boots", price: 14000, image: "images/p11.avif" },
+    { name: "Sports Trainers", price: 10000, image: "images/p12.jpg" },
+    { name: "Women’s Heels", price: 8500, image: "images/p13.jpg" },
+    { name: "Winter Boots", price: 16000, image: "images/p14.jpg" }
+  ];
+
+  const productRef = collection(db, "products");
+
+  products.forEach(async (p) => {
+    try {
+      await addDoc(productRef, p);
+      console.log(`✅ Added: ${p.name}`);
+    } catch (e) {
+      console.error(`❌ Error adding ${p.name}`, e);
+    }
+  });
+</script>
+
+
 </body>
 </html>
