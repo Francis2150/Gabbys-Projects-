@@ -32,9 +32,11 @@ async function loadProducts() {
     const data = docSnap.data();
     const div = document.createElement('div');
     div.innerHTML = `
-      <b>${data.name}</b> - GHS ${(data.price / 100).toFixed(2)}
-      <button onclick="deleteProduct('${docSnap.id}')">❌</button>
-    `;
+  <img src="${data.image}" alt="${data.name}" style="width: 100px; height: 100px; object-fit: cover; display: block; margin-bottom: 5px;" />
+  <b>${data.name}</b> - GHS ${(data.price / 100).toFixed(2)}<br/>
+  <button onclick="deleteProduct('${docSnap.id}')">❌ Delete</button>
+`;
+
     listDiv.appendChild(div);
   });
 }
