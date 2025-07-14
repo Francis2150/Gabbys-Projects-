@@ -34,9 +34,18 @@ input, textarea, select, button {
 
 /* Header */
 header {
+<<<<<<< HEAD
    background: #003366;
     color: white;
   padding: 20px;
+=======
+ background: #003366;
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+>>>>>>> fdfb174452924ca054750109252f67fc1aa397ac
 }
 
 header .logo {

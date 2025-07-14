@@ -1,207 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Test E-Commerce</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="style-store.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kingstone Ventures Shop</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-store.css" />
 </head>
 <body>
-  <h1>Welcome to My Shop</h1>
+<header>
+  <nav>
+    <ul>
+      
 
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="register-business.html">Business Registration</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+  </nav>
+</header>
+
+<h1>Welcome to Kingstone Ventures Cosmetics Shop</h1>
   <div class="page-container">
     <div class="product-container">
 <!-- 1 -->
-<div class="product">
-  <img class="product-img" src="images/p1.jpg" alt="">
-  <h2 class="product-name">Men's Running Shoes</h2>
-  <p class="product-price">Price: GHS 120</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty1">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Men\'s Running Shoes', 12000)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Men\'s Running Shoes', 12000, document.getElementById('qty1').value, 'images/p1.jpg')">Add to Cart</button>
-  </div>
-</div>
+
 
 <!-- 2 -->
-<div class="product">
-  <img class="product-img" src="images/p2b.webp" alt="">
-  <h2 class="product-name">Women's Sneakers</h2>
-  <p class="product-price">Price: GHS 95</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty2">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Women\'s Sneakers', 9500)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Women\'s Sneakers', 9500, document.getElementById('qty2').value, 'images/p2b.webp')">Add to Cart</button>
-  </div>
-</div>
+
 
 <!-- 3 -->
-<div class="product">
-  <img class="product-img" src="images/p3.webp" alt="">
-  <h2 class="product-name">Cocoa Butter Cream</h2>
-  <p class="product-price">Price: GHS 80</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty3">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Cocoa Butter Cream', 8000)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Cocoa Butter Cream', 8000, document.getElementById('qty3').value, 'images/p3.webp')">Add to Cart</button>
-  </div>
-</div>
+
 
 <!-- 4 -->
-<div class="product">
-  <img class="product-img" src="images/p4.avif" alt="">
-  <h2 class="product-name">Casual Loafers</h2>
-  <p class="product-price">Price: GHS 75</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty4">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Casual Loafers', 7500)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Casual Loafers', 7500, document.getElementById('qty4').value, 'images/p4.avif')">Add to Cart</button>
-  </div>
-</div>
 
 <!-- 5 -->
-<div class="product">
-  <img class="product-img" src="images/p5.jpg" alt="">
-  <h2 class="product-name">Ladies’ Flats</h2>
-  <p class="product-price">Price: GHS 65</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty5">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Ladies’ Flats', 6500)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Ladies’ Flats', 6500, document.getElementById('qty5').value, 'images/p5.jpg')">Add to Cart</button>
-  </div>
-</div>
+
 
 <!-- 6 -->
-<div class="product">
-  <img class="product-img" src="images/p6.jpg" alt="">
-  <h2 class="product-name">Leather Boots</h2>
-  <p class="product-price">Price: GHS 150</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty6">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Leather Boots', 15000)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Leather Boots', 15000, document.getElementById('qty6').value, 'images/p6.jpg')">Add to Cart</button>
-  </div>
-</div>
+
 
 <!-- 7 -->
-<div class="product">
-  <img class="product-img" src="images/p7.jpg" alt="">
-  <h2 class="product-name">Men's Sandals</h2>
-  <p class="product-price">Price: GHS 40</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty7">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Men\'s Sandals', 4000)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Men\'s Sandals', 4000, document.getElementById('qty7').value, 'images/p7.jpg')">Add to Cart</button>
-  </div>
-</div>
+
 
 <!-- 8 -->
-<div class="product">
-  <img class="product-img" src="images/p8.webp" alt="">
-  <h2 class="product-name">Kids' Sports Shoes</h2>
-  <p class="product-price">Price: GHS 55</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty8">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Kids\' Sports Shoes', 5500)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Kids\' Sports Shoes', 5500, document.getElementById('qty8').value, 'images/p8.webp')">Add to Cart</button>
-  </div>
-</div>
 
-<!-- 9 -->
-<div class="product">
-  <img class="product-img" src="images/p9.jpeg" alt="">
-  <h2 class="product-name">Formal Dress Shoes</h2>
-  <p class="product-price">Price: GHS 130</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty9">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Formal Dress Shoes', 13000)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Formal Dress Shoes', 13000, document.getElementById('qty9').value, 'images/p9.jpeg')">Add to Cart</button>
-  </div>
-</div>
 
-<!-- 10 -->
-<div class="product">
-  <img class="product-img" src="images/p10.avif" alt="">
-  <h2 class="product-name">Men’s Slippers</h2>
-  <p class="product-price">Price: GHS 45</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty10">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Men’s Slippers', 4500)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Men’s Slippers', 4500, document.getElementById('qty10').value, 'images/p10.avif')">Add to Cart</button>
-  </div>
-</div>
 
 <!-- 11 -->
-<div class="product">
-  <img class="product-img" src="images/p11.avif" alt="">
-  <h2 class="product-name">Ankle Boots</h2>
-  <p class="product-price">Price: GHS 140</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty11">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Ankle Boots', 14000)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Ankle Boots', 14000, document.getElementById('qty11').value, 'images/p11.avif')">Add to Cart</button>
-  </div>
-</div>
+
 
 <!-- 12 -->
-<div class="product">
-  <img class="product-img" src="images/p12.jpg" alt="">
-  <h2 class="product-name">Sports Trainers</h2>
-  <p class="product-price">Price: GHS 100</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty12">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Sports Trainers', 10000)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Sports Trainers', 10000, document.getElementById('qty12').value, 'images/p12.jpg')">Add to Cart</button>
-  </div>
-</div>
+
 
 <!-- 13 -->
-<div class="product">
-  <img class="product-img" src="images/p13.jpg" alt="">
-  <h2 class="product-name">Women’s Heels</h2>
-  <p class="product-price">Price: GHS 85</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty13">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Women’s Heels', 8500)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Women’s Heels', 8500, document.getElementById('qty13').value, 'images/p13.jpg')">Add to Cart</button>
-  </div>
-</div>
 
 <!-- 14 -->
-<div class="product">
-  <img class="product-img" src="images/p14.jpg" alt="">
-  <h2 class="product-name">Winter Boots</h2>
-  <p class="product-price">Price: GHS 160</p>
-  <input type="number" placeholder="Quantity" class="quantity-input" id="qty14">
-  <div class="product-actions">
-    <button class="buy-btn" onclick="payWithPaystack('Winter Boots', 16000)">Buy Now</button>
-    <button class="add-to-cart-btn" onclick="addToCart('Winter Boots', 16000, document.getElementById('qty14').value, 'images/p14.jpg')">Add to Cart</button>
+
+
+
+</div>
+
+   
+  <div class="cart-side">
+    <section class="cart-section">
+      <h2>🛒 Your Cart</h2>
+      <div id="cart-items"></div>
+      <div id="cart-total">Total: GHS 0.00</div>
+      <button id="orderBtn" class="btn">Order Now</button>
+    </section>
+
+    <section class="order-form" id="order-form" style="display: none;">
+      <h2>Complete Order</h2>
+      <form id="checkoutForm">
+        <input type="text" id="customerName" placeholder="Your Name" required />
+        <input type="email" id="customerEmail" placeholder="Email Address" required />
+        <input type="tel" id="customerWhatsApp" placeholder="WhatsApp Number" required />
+        <button type="submit" class="btn">Send Order via WhatsApp</button>
+      </form>
+    </section>
   </div>
 </div>
 
+<script src="scripts/cart.js"></script>
+<script type="module" src="scripts/shop.js"></script>
 
-    </div>
-
-    <div class="cart-side">
-      <section class="cart-section">
-        <h2>🛒 Your Cart</h2>
-        <div id="cart-items"></div>
-        <div id="cart-total">Total: GHS 0.00</div>
-        <button id="orderBtn" class="btn">Order Now</button>
-      </section>
-
-      <section class="order-form" id="order-form" style="display: none;">
-        <h2>Complete Order</h2>
-        <form id="checkoutForm">
-          <input type="text" id="customerName" placeholder="Your Name" required>
-          <input type="email" id="customerEmail" placeholder="Email Address" required>
-          <input type="tel" id="customerWhatsApp" placeholder="WhatsApp Number" required>
-          <button type="submit" class="btn">Send Order via WhatsApp</button>
-        </form>
-      </section>
-    </div>
-  </div>
-
-  <script src="scripts/cart.js"></script>
 </body>
 </html>
