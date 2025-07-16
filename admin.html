@@ -142,6 +142,12 @@
   <h2>Admin - Manage Products</h2>
 
   <div class="form-container">
+    <input type="text" placeholder="Admin id" id="adminId">
+    <input type="text" placeholder=" Admin Password" id="adminPassword">
+  </div>
+
+  <div id="admin" style="display: none;">
+  <div class="form-container">
     <input id="name" placeholder="Product Name" />
     <input id="price" placeholder="Price in Pesewas (e.g. 8500)" />
     <input type="file" id="imageFile" accept="image/*" />
@@ -152,7 +158,7 @@
   <div id="productList">
     <!-- Products will be rendered here dynamically -->
   </div>
-
+</div>
   <!-- Firebase script remains the same -->
   <script type="module">
     import { db } from './scripts/firebase-config.js';

@@ -17,6 +17,13 @@ const priceInput = document.getElementById('price');
 const imageFileInput = document.getElementById('imageFile');
 const productList = document.getElementById('productList');
 const addProductBtn = document.getElementById('addProductBtn');
+const adminId = document.getElementById('adminId');
+const adminPassword = document.getElementById('adminPassword');
+
+if (adminId === "gabby517" && adminPassword === "Gabby517?") {
+ document.getElementById('admin').style.display = block
+}
+
 
 const productRef = collection(db, 'products');
 
