@@ -1,83 +1,100 @@
-import { db, storage } from './firebase-config.js';
-import { collection, addDoc, getDocs, query, where, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+import { db } from './firebase-config.js';
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// === Cloudinary Config ===
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/drwqabhyx/image/upload';
+const CLOUDINARY_PRESET = 'GENERAL'; // ✅ this matches your actual preset name
 
 const nameInput = document.getElementById('name');
 const priceInput = document.getElementById('price');
-const imageFileInput = document.getElementById('imageFile');  // Make sure input type="file" id="imageFile"
+const imageFileInput = document.getElementById('imageFile');
 const productList = document.getElementById('productList');
 const addProductBtn = document.getElementById('addProductBtn');
 
 const productRef = collection(db, 'products');
 
+// === Upload to Cloudinary ===
+async function uploadImageToCloudinary(file) {
+  const formData = new FormData();
+  formData.append('file', file); // actual image file
+  formData.append('upload_preset', 'GENERAL'); // ✅ MATCHES your preset
+
+  const res = await fetch('https://api.cloudinary.com/v1_1/drwqabhyx/image/upload', {
+    method: 'POST',
+    body: formData
+  });
+
+  const data = await res.json();
+  console.log('Cloudinary response:', data);
+
+  if (!res.ok || !data.secure_url) {
+    throw new Error(data.error?.message || 'Image upload failed');
+  }
+
+  return data.secure_url;
+}
+
+
+// === Add Product ===
 addProductBtn.onclick = async () => {
-  console.log('Add button clicked');
   const name = nameInput.value.trim();
   const price = parseFloat(priceInput.value.trim());
   const file = imageFileInput.files[0];
-  console.log({ name, price, file });
 
   if (!name || isNaN(price) || !file) {
-    alert('Please fill all fields and select an image file.');
+    alert('Please enter name, price, and choose an image.');
     return;
   }
 
   try {
-    // Prevent duplicates by name
-    const q = query(productRef, where('name', '==', name));
-    const existing = await getDocs(q);
-    console.log('Existing docs:', existing.size);
-    if (!existing.empty) {
-      alert('Product with this name already exists.');
-      return;
-    }
+    const imageUrl = await uploadImageToCloudinary(file);
 
-    // Upload image file to Firebase Storage
-    const storageRef = ref(storage, `product-images/${Date.now()}_${file.name}`);
-    const uploadSnapshot = await uploadBytes(storageRef, file);
-    console.log('Upload successful', uploadSnapshot);
+    await addDoc(productRef, {
+      name,
+      price: Math.round(price * 100),
+      image: imageUrl
+    });
 
-    // Get downloadable URL
-    const imageUrl = await getDownloadURL(uploadSnapshot.ref);
-    console.log('Image URL:', imageUrl);
-
-    // Add product data to Firestore
-    await addDoc(productRef, { name, price: Math.round(price * 100), image: imageUrl });
-
-    alert('Product added successfully!');
-
-    // Clear inputs
+    alert('✅ Product added!');
     nameInput.value = '';
     priceInput.value = '';
     imageFileInput.value = '';
-
-    // Reload product list
     loadProducts();
-  } catch (error) {
-    console.error('Error adding product:', error);
-    alert('Failed to add product.');
+  } catch (err) {
+    console.error('Error adding product:', err);
+    alert('❌ Failed to add product: ' + err.message);
   }
 };
 
+// === Edit Product ===
+window.editProduct = async (id, oldData) => {
+  const newName = prompt('New name:', oldData.name);
+  const newPrice = prompt('New price:', (oldData.price / 100).toFixed(2));
+  const file = imageFileInput.files[0];
 
-async function loadProducts() {
-  const snapshot = await getDocs(productRef);
-  productList.innerHTML = '';
+  const updateData = {
+    name: newName || oldData.name,
+    price: Math.round(parseFloat(newPrice || oldData.price / 100) * 100)
+  };
 
-  snapshot.forEach(docSnap => {
-    const data = docSnap.data();
-    const div = document.createElement('div');
-    div.className = 'product-card';
-    div.innerHTML = `
-      <img src="${data.image}" alt="${data.name}" />
-      <h3>${data.name}</h3>
-      <p>GHS ${(data.price / 100).toFixed(2)}</p>
-      <button onclick="deleteProduct('${docSnap.id}')">❌ Delete</button>
-    `;
-    productList.appendChild(div);
-  });
-}
+  if (file) {
+    const newImageUrl = await uploadImageToCloudinary(file);
+    updateData.image = newImageUrl;
+  }
 
+  await updateDoc(doc(db, 'products', id), updateData);
+  alert('✅ Product updated');
+  loadProducts();
+};
+
+// === Delete Product ===
 window.deleteProduct = async (id) => {
   if (confirm('Are you sure you want to delete this product?')) {
     await deleteDoc(doc(db, 'products', id));
@@ -85,5 +102,26 @@ window.deleteProduct = async (id) => {
   }
 };
 
-// Load existing products on page load
+// === Load Products ===
+async function loadProducts() {
+  const snapshot = await getDocs(productRef);
+  productList.innerHTML = '';
+
+  snapshot.forEach(docSnap => {
+    const data = docSnap.data();
+    const id = docSnap.id;
+
+    const div = document.createElement('div');
+    div.className = 'product-card';
+    div.innerHTML = `
+      <img src="${data.image}" alt="${data.name}" />
+      <h3>${data.name}</h3>
+      <p>GHS ${(data.price / 100).toFixed(2)}</p>
+      <button onclick="editProduct('${id}', ${JSON.stringify(data).replace(/"/g, '&quot;')})">✏️ Edit</button>
+      <button onclick="deleteProduct('${id}')">🗑️ Delete</button>
+    `;
+    productList.appendChild(div);
+  });
+}
+
 loadProducts();
