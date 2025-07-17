@@ -125,6 +125,39 @@
       font-size: 14px;
       color: #555;
     }
+    .loginb{
+      height: 55px;
+      width: 150px;
+      background-color: chartreuse;
+      font-size: 25px;
+      border:none
+      
+    }
+
+
+
+    #loginBtn {
+  background-color: #4CAF50; /* green */
+  color: white;
+  padding: 15px 20px;
+  font-size: 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#loginBtn:hover {
+  background-color: #022204;
+}
+
+#adminId,
+#adminPassword {
+  padding: 8px;
+  margin: 5px 0;
+  width: 300px;
+  font-size: 18px;
+}
   </style>
 </head>
 
@@ -142,9 +175,12 @@
   <h2>Admin - Manage Products</h2>
 
   <div class="form-container">
-    <input type="text" placeholder="Admin id" id="adminId">
-    <input type="text" placeholder=" Admin Password" id="adminPassword">
+   <input type="text" id="adminId" placeholder="Admin ID" />
+   <input type="password" id="adminPassword" placeholder="Password" />
+   <button class="loginb" id="loginBtn">🔐 Login</button>
+
   </div>
+ 
 
   <div id="admin" style="display: none;">
   <div class="form-container">

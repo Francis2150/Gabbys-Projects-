@@ -20,9 +20,39 @@ const addProductBtn = document.getElementById('addProductBtn');
 const adminId = document.getElementById('adminId');
 const adminPassword = document.getElementById('adminPassword');
 
-if (adminId === "gabby517" && adminPassword === "Gabby517?") {
- document.getElementById('admin').style.display = block
-}
+
+const loginBtn = document.getElementById('loginBtn');
+const adminSection = document.getElementById('admin');
+
+let isLoggedIn = false;
+
+loginBtn.onclick = () => {
+  if (!isLoggedIn) {
+    // Try to log in
+    const id = adminId.value.trim();
+    const password = adminPassword.value;
+
+    if (id === "2150" && password === "123") {
+      isLoggedIn = true;
+      adminSection.style.display = "block";
+      loginBtn.textContent = " Logout";
+      alert("✅ Logged in successfully!");
+    } else {
+      alert("❌ Invalid credentials.");
+    }
+  } else {
+    // Logging out
+    isLoggedIn = false;
+    adminSection.style.display = "none";
+    loginBtn.textContent = "🔐 Login";
+    adminId.value = '';
+    adminPassword.value = '';
+    alert("👋 Logged out.");
+  }
+};
+
+
+
 
 
 const productRef = collection(db, 'products');
