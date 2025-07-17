@@ -3,14 +3,23 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAn_QB-tl2nUFkHXwdlEh7G_REUI5_rO6U",
-  authDomain: "gabbytrial-4a9a9.firebaseapp.com",
-  projectId: "gabbytrial-4a9a9",
-  storageBucket: "gabbytrial-4a9a9.appspot.com",
-  messagingSenderId: "507301585683",
-  appId: "1:507301585683:web:0fce82879396f8366db0e6"
+  apiKey: "AIzaSyCtASqw5yCt4YjEjzlpPph7pShNMH4DXpk",
+  authDomain: "store-cbcfe.firebaseapp.com",
+  projectId: "store-cbcfe",
+  storageBucket: "store-cbcfe.firebasestorage.app",
+  messagingSenderId: "471766035205",
+  appId: "1:471766035205:web:6fc84482f2c500ee50e56c"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
