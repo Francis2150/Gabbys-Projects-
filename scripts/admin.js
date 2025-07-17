@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const id = adminId.value.trim();
       const password = adminPassword.value;
 
-      if (id === "gabby517" && password === "Gabby517?") {
+      if (id === "2150" && password === "123") {
         isLoggedIn = true;
         adminSection.style.display = "block";
         loginBtn.textContent = "🚪 Logout";
