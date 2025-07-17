@@ -17,39 +17,45 @@ const priceInput = document.getElementById('price');
 const imageFileInput = document.getElementById('imageFile');
 const productList = document.getElementById('productList');
 const addProductBtn = document.getElementById('addProductBtn');
-const adminId = document.getElementById('adminId');
-const adminPassword = document.getElementById('adminPassword');
 
 
-const loginBtn = document.getElementById('loginBtn');
-const adminSection = document.getElementById('admin');
 
-let isLoggedIn = false;
 
-loginBtn.onclick = () => {
-  if (!isLoggedIn) {
-    // Try to log in
-    const id = adminId.value.trim();
-    const password = adminPassword.value;
 
-    if (id === "2150" && password === "123") {
-      isLoggedIn = true;
-      adminSection.style.display = "block";
-      loginBtn.textContent = " Logout";
-      alert("✅ Logged in successfully!");
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const adminId = document.getElementById('adminId');
+  const adminPassword = document.getElementById('adminPassword');
+  const loginBtn = document.getElementById('loginBtn');
+  const adminSection = document.getElementById('admin');
+
+  let isLoggedIn = false;
+
+  loginBtn.onclick = () => {
+    if (!isLoggedIn) {
+      const id = adminId.value.trim();
+      const password = adminPassword.value;
+
+      if (id === "gabby517" && password === "Gabby517?") {
+        isLoggedIn = true;
+        adminSection.style.display = "block";
+        loginBtn.textContent = "🚪 Logout";
+        alert("✅ Logged in successfully!");
+      } else {
+        alert("❌ Invalid credentials.");
+      }
     } else {
-      alert("❌ Invalid credentials.");
+      isLoggedIn = false;
+      adminSection.style.display = "none";
+      loginBtn.textContent = "🔐 Login";
+      adminId.value = '';
+      adminPassword.value = '';
+      alert("👋 Logged out.");
     }
-  } else {
-    // Logging out
-    isLoggedIn = false;
-    adminSection.style.display = "none";
-    loginBtn.textContent = "🔐 Login";
-    adminId.value = '';
-    adminPassword.value = '';
-    alert("👋 Logged out.");
-  }
-};
+  };
+});
+
 
 
 
