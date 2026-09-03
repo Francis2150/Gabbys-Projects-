@@ -11,8 +11,6 @@
 <header>
   <nav>
     <ul>
-      
-
       <li><a href="index.html">Home</a></li>
       <li><a href="shop.html">Shop</a></li>
       <li><a href="register-business.html">Business Registration</a></li>
@@ -22,70 +20,105 @@
 </header>
 
 <h1>Welcome to Kingstone Ventures Cosmetics Shop</h1>
-  <div class="page-container">
-    <div class="product-container">
-<!-- 1 -->
 
+<div class="page-container">
+    <div class="product-container" id="product-container">
+      <!-- Products will be dynamically injected here by Firebase -->
+      <p style="text-align: center; grid-column: 1/-1;">Loading products...</p>
+    </div>
 
-<!-- 2 -->
+    <div class="cart-side">
+      <section class="cart-section">
+        <h2>🛒 Your Cart</h2>
+        <div id="cart-items"></div>
+        <div id="cart-total">Total: GHS 0.00</div>
+        <button id="orderBtn" class="btn">Order Now</button>
+      </section>
 
-
-<!-- 3 -->
-
-
-<!-- 4 -->
-
-<!-- 5 -->
-
-
-<!-- 6 -->
-
-
-<!-- 7 -->
-
-
-<!-- 8 -->
-
-
-
-<!-- 11 -->
-
-
-<!-- 12 -->
-
-
-<!-- 13 -->
-
-<!-- 14 -->
-
-
-
+      <section class="order-form" id="order-form" style="display: none;">
+        <h2>Complete Order</h2>
+        <form id="checkoutForm">
+          <input type="text" id="customerName" placeholder="Your Name" required />
+          <input type="email" id="customerEmail" placeholder="Email Address" required />
+          <input type="tel" id="customerWhatsApp" placeholder="WhatsApp Number" required />
+          <button type="submit" class="btn">Send Order via WhatsApp</button>
+        </form>
+      </section>
+    </div>
 </div>
 
-   
-  <div class="cart-side">
-    <section class="cart-section">
-      <h2>🛒 Your Cart</h2>
-      <div id="cart-items"></div>
-      <div id="cart-total">Total: GHS 0.00</div>
-      <button id="orderBtn" class="btn">Order Now</button>
-    </section>
-
-    <section class="order-form" id="order-form" style="display: none;">
-      <h2>Complete Order</h2>
-      <form id="checkoutForm">
-        <input type="text" id="customerName" placeholder="Your Name" required />
-        <input type="email" id="customerEmail" placeholder="Email Address" required />
-        <input type="tel" id="customerWhatsApp" placeholder="WhatsApp Number" required />
-        <button type="submit" class="btn">Send Order via WhatsApp</button>
-      </form>
-    </section>
-  </div>
-</div>
-
+<!-- Standard script for cart logic -->
 <script src="scripts/cart.js"></script>
 
-<script type="module" src="scripts/shop.js"></script>
+<!-- Module script to fetch data from Firebase -->
+<script type="module">
+  import { db } from './firebase-config.js';
+  import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+  const productContainer = document.getElementById('product-container');
+
+  async function displayProducts() {
+    try {
+      // Fetch all documents from the "products" collection
+      const querySnapshot = await getDocs(collection(db, "products"));
+      
+      productContainer.innerHTML = ''; // Clear the "Loading..." text
+
+      if (querySnapshot.empty) {
+        productContainer.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">No products found. Add some in the Admin panel!</p>';
+        return;
+      }
+
+      querySnapshot.forEach((doc) => {
+        const product = doc.data();
+        const productId = doc.id;
+        
+        // Convert Pesewas to GHS (Assuming 100 Pesewas = 1 GHS)
+        const priceInGhs = (product.price / 100).toFixed(2);
+
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card'); // Make sure this class exists in your CSS
+        
+        productCard.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/150'">
+          <h3>${product.name}</h3>
+          <p>GHS ${priceInGhs}</p>
+          <button class="btn add-to-cart" data-id="${productId}" data-name="${product.name}" data-price="${product.price}">
+            Add to Cart
+          </button>
+        `;
+
+        productContainer.appendChild(productCard);
+      });
+
+      // Attach event listeners to the newly created "Add to Cart" buttons
+      document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const item = {
+            id: e.target.dataset.id,
+            name: e.target.dataset.name,
+            price: parseInt(e.target.dataset.price), // Keep as pesewas for math
+            image: e.target.dataset.image
+          };
+          
+          // Call the function from cart.js. 
+          // Make sure your cart.js exposes a function called addToCart
+          if (typeof addToCart === 'function') {
+            addToCart(item);
+          } else {
+            console.error('addToCart function not found. Make sure scripts/cart.js is loaded correctly.');
+          }
+        });
+      });
+
+    } catch (error) {
+      console.error("Error fetching products: ", error);
+      productContainer.innerHTML = '<p style="color: red; text-align: center;">Error loading products. Check console.</p>';
+    }
+  }
+
+  // Load products when the page loads
+  displayProducts();
+</script>
 </body>
 </html>
