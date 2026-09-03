@@ -20,6 +20,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 header .logo {
@@ -45,6 +46,33 @@ nav ul li a {
 
 nav ul li a:hover {
     color: gold;
+}
+
+/* Hamburger Menu Styling */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.hamburger .line {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.3s;
+}
+
+/* Hamburger Animation */
+.hamburger.active .line:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+.hamburger.active .line:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.active .line:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
 }
 
 /* Hero Section */
@@ -101,7 +129,7 @@ nav ul li a:hover {
 
 .shop div:first-child,
 .register div:first-child {
-    height: 380px; /* or any fixed height */
+    height: 380px; 
     width: 100%;
     overflow: hidden;
 }
@@ -117,7 +145,7 @@ nav ul li a:hover {
 .shop > div:last-child,
 .register > div:last-child {
     font-size: 25PX;
-    margin-top: 20px; /* Adjust as needed */
+    margin-top: 20px; 
 }
 
 @media (max-width: 768px) {
@@ -126,15 +154,12 @@ nav ul li a:hover {
     }
 }
 
-
 .btn {
-   
     background: gold;
     color: black;
     padding: 12px 24px;
     text-decoration: none;
     border-radius: 30px;
-    
     margin-right: 10px;
     transition: background 0.3s;
 }
@@ -147,7 +172,6 @@ nav ul li a:hover {
     border: 2px solid gold;
     padding: 10px 22px;
     border-radius: 30px;
-   
     background: transparent;
     color: gold;
     text-decoration: none;
@@ -185,11 +209,11 @@ section {
     margin-top: 20px;
 }
 
-
 .services, .portfolio {
     background: #003366;
     color: #f4f4f4;
 }
+
 .card {
     background: white;
     color: #000000;
@@ -235,20 +259,33 @@ footer {
     font-size: 14px;
 }
 
-/* Responsive */
+/* Responsive - Phones (Hamburger Menu Activation) */
 @media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        text-align: center;
+    .hamburger {
+        display: flex;
     }
 
     nav ul {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #003366;
         flex-direction: column;
-        margin-top: 10px;
+        align-items: flex-start;
+        display: none; /* Hidden by default */
+        padding: 10px 20px;
+        gap: 10px;
+        z-index: 10;
+    }
+
+    nav ul.active {
+        display: flex; /* Shows when hamburger clicked */
     }
 
     nav ul li {
-        margin: 10px 0;
+        margin: 5px 0;
+        margin-left: 0;
     }
 
     .hero h1 {

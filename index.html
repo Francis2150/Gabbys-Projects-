@@ -11,8 +11,14 @@
     <!-- Header -->
     <header>
         <div class="logo">Kingstone Ventures</div>
+        <!-- Hamburger Icon -->
+        <div class="hamburger" id="hamburger-icon">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
         <nav>
-            <ul>
+            <ul class="nav-links" id="nav-list">
                 <li><a href="#home">Home</a></li>
                 <li><a href="shop.html">Shop</a></li>
                 <li><a href="register-business.html">Business Registration</a></li>
@@ -26,8 +32,6 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <h1 class="moving-text">Your One-Stop Hub for Business & Beauty</h1>
-
-
         <p class="under-moving">We combine professional business registration services with premium cosmetic products to serve your every venture.</p>
         <div class="hero-btns">
             <div class="shop">
@@ -35,24 +39,17 @@
                     <img class="shop-image" src="images/cosmetic-large.jpg" alt="">
                 </div>
                 <div>
-                    <a href="shop.html" class="btn">
-                        Shop Now
-                    </a>
+                    <a href="shop.html" class="btn">Shop Now</a>
                 </div>
-                
             </div>
            <div class="register">
-            <div>
-                <img class="register-image" src="images/officebac2.webp" alt="">
-            </div>
-            <div>
-                 <a href="register-business.html" class="btn-outline">
-                    Register Your Business
-                </a>
-            </div>
-               
+                <div>
+                    <img class="register-image" src="images/officebac2.webp" alt="">
+                </div>
+                <div>
+                    <a href="register-business.html" class="btn-outline">Register Your Business</a>
+                </div>
            </div>
-            
         </div>
     </section>
 
@@ -135,6 +132,15 @@
         <p>&copy; 2025 Kingstone Ventures | Business Registration & Cosmetics Experts</p>
     </footer>
 
-    <script src="js/script.js"></script>
+    <!-- Hamburger Menu Toggle Script -->
+    <script>
+      const hamburger = document.getElementById('hamburger-icon');
+      const navList = document.getElementById('nav-list');
+
+      hamburger.addEventListener('click', () => {
+        navList.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+    </script>
 </body>
 </html>
