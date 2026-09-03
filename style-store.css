@@ -24,9 +24,12 @@ header {
 
 nav ul {
   display: flex;
-  justify-content: center;
+  /* Changed to flex-start to keep items on the left */
+  justify-content: flex-start; 
   list-style: none;
   flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
 }
 
 nav ul li {
@@ -167,7 +170,8 @@ button:hover,
 @media (max-width: 600px) {
   nav ul {
     flex-direction: column;
-    align-items: center;
+    /* Changed to flex-start to keep items on the left on phones */
+    align-items: flex-start; 
   }
 
   .product-container {
