@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin Panel</title>
-  <script type="module" src="scripts/admin.js"></script>
+  <!-- Removed admin.js from here to prevent conflicts. We will use the inline script below -->
 
   <style>
     body {
@@ -125,39 +125,37 @@
       font-size: 14px;
       color: #555;
     }
+    
     .loginb{
       height: 55px;
       width: 150px;
       background-color: chartreuse;
       font-size: 25px;
       border:none
-      
     }
 
-
-
     #loginBtn {
-  background-color: #4CAF50; /* green */
-  color: white;
-  padding: 15px 20px;
-  font-size: 25px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+      background-color: #4CAF50; /* green */
+      color: white;
+      padding: 15px 20px;
+      font-size: 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-#loginBtn:hover {
-  background-color: #022204;
-}
+    #loginBtn:hover {
+      background-color: #022204;
+    }
 
-#adminId,
-#adminPassword {
-  padding: 8px;
-  margin: 5px 0;
-  width: 300px;
-  font-size: 18px;
-}
+    #adminId,
+    #adminPassword {
+      padding: 8px;
+      margin: 5px 0;
+      width: 300px;
+      font-size: 18px;
+    }
   </style>
 </head>
 
@@ -178,28 +176,45 @@
    <input type="text" id="adminId" placeholder="Admin ID" />
    <input type="password" id="adminPassword" placeholder="Password" />
    <button class="loginb" id="loginBtn">🔐 Login</button>
-
   </div>
  
-
   <div id="admin" style="display: none;">
-  <div class="form-container">
-    <input id="name" placeholder="Product Name" />
-    <input id="price" placeholder="Price in Pesewas (e.g. 8500)" />
-    <input type="file" id="imageFile" accept="image/*" />
+    <div class="form-container">
+      <input id="name" placeholder="Product Name" />
+      <input id="price" placeholder="Price in Pesewas (e.g. 8500)" />
+      <input type="file" id="imageFile" accept="image/*" />
 
-    <button id="addProductBtn">Add Product</button>
+      <button id="addProductBtn">Add Product</button>
+    </div>
+
+    <div id="productList">
+      <!-- Products will be rendered here dynamically -->
+    </div>
   </div>
 
-  <div id="productList">
-    <!-- Products will be rendered here dynamically -->
-  </div>
-</div>
-  <!-- Firebase script remains the same -->
+  <!-- Firebase Setup & Logic -->
   <script type="module">
-    import { db } from './scripts/firebase-config.js';
+    // FIXED PATH: firebase-config.js is in the root, not in scripts/
+    import { db } from './firebase-config.js';
     import { collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+    // --- LOGIN LOGIC ---
+    const loginBtn = document.getElementById('loginBtn');
+    const adminSection = document.getElementById('admin');
+
+    loginBtn.addEventListener('click', () => {
+      const id = document.getElementById('adminId').value;
+      const pass = document.getElementById('adminPassword').value;
+      
+      // Simple hardcoded check for now. You can change these credentials.
+      if (id === 'admin' && pass === 'password123') {
+        adminSection.style.display = 'block';
+      } else {
+        alert('Incorrect Admin ID or Password');
+      }
+    });
+
+    // --- SEED DATABASE LOGIC ---
     const products = [
       { name: "Men's Running Shoes", price: 12000, image: "images/p1.jpg" },
       { name: "Women's Sneakers", price: 9500, image: "images/p2b.webp" },
@@ -219,19 +234,24 @@
 
     const productRef = collection(db, "products");
 
-    for (const p of products) {
-      const q = query(productRef, where("name", "==", p.name));
-      const querySnapshot = await getDocs(q);
+    // Wrapped in a function so it doesn't run automatically on every page load
+    async function seedDatabase() {
+      for (const p of products) {
+        const q = query(productRef, where("name", "==", p.name));
+        const querySnapshot = await getDocs(q);
 
-      if (querySnapshot.empty) {
-        await addDoc(productRef, p);
-        console.log(`✅ Added: ${p.name}`);
-      } else {
-        console.log(`⚠️ Skipped (already exists): ${p.name}`);
+        if (querySnapshot.empty) {
+          await addDoc(productRef, p);
+          console.log(`✅ Added: ${p.name}`);
+        } else {
+          console.log(`⚠️ Skipped (already exists): ${p.name}`);
+        }
       }
+      alert("Database seeding complete!");
     }
 
-    // Optional: Render existing products in #productList dynamically here
+    // Optional: To seed your database, open your browser console and type: seedDatabase()
+    window.seedDatabase = seedDatabase; 
   </script>
 </body>
 </html>
