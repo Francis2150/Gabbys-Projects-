@@ -5,19 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Your Business | Kingstone Ventures</title>
     <link rel="stylesheet" href="register.css">
+    <style>
+        /* Hamburger Menu CSS (To match the rest of your site) */
+        header {
+            background: #003366;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        header .logo { font-size: 24px; font-weight: bold; }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links li a { color: #fff; font-weight: 500; text-decoration: none; }
+        .nav-links li a:hover { color: gold; }
+        
+        .hamburger { display: none; flex-direction: column; cursor: pointer; z-index: 20; }
+        .hamburger .line { width: 25px; height: 3px; background-color: white; margin: 4px 0; transition: 0.3s; }
+        .hamburger.active .line:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
+        .hamburger.active .line:nth-child(2) { opacity: 0; }
+        .hamburger.active .line:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #003366;
+                flex-direction: column;
+                align-items: flex-start;
+                display: none;
+                padding: 10px 20px;
+                gap: 15px;
+                z-index: 10;
+            }
+            .nav-links.active { display: flex; }
+            .nav-links li { margin: 5px 0; }
+        }
+        
+        /* Simple styling for the Register Buttons */
+        .card .btn {
+            background: gold;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            width: 100%;
+        }
+        .card .btn:hover {
+            background: #e6b800;
+        }
+    </style>
 </head>
 <body>
 
     <!-- Header -->
     <header>
         <div class="logo">Kingstone Ventures</div>
+        <div class="hamburger" id="hamburger-icon">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
         <nav>
-            <ul>
+            <ul class="nav-links" id="nav-list">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="shop.html">Shop</a></li>
                 <li><a href="register-business.html" class="active">Register Business</a></li>
-               
-                
             </ul>
         </nav>
     </header>
@@ -40,6 +106,8 @@
                     <li><strong>Advantages:</strong> Low startup costs, full control, simple tax filing</li>
                     <li><strong>Responsibilities:</strong> Personal liability for business debts</li>
                 </ul>
+                <!-- Added Button -->
+                <button class="btn" onclick="showForm('Sole Proprietorship')">Register Now</button>
             </div>
 
             <div class="card">
@@ -50,6 +118,8 @@
                     <li><strong>Advantages:</strong> Shared resources and responsibilities</li>
                     <li><strong>Responsibilities:</strong> Shared liability; legal agreement is recommended</li>
                 </ul>
+                <!-- Added Button -->
+                <button class="btn" onclick="showForm('Partnership')">Register Now</button>
             </div>
 
             <div class="card">
@@ -60,13 +130,15 @@
                     <li><strong>Advantages:</strong> Limited liability, credibility, access to investment</li>
                     <li><strong>Responsibilities:</strong> Strict regulatory compliance, annual filings</li>
                 </ul>
+                <!-- Added Button -->
+                <button class="btn" onclick="showForm('Company (Limited Liability)')">Register Now</button>
             </div>
         </div>
     </section>
 
     <!-- Registration Form -->
-    <section class="form-section" style="display: none;">
-        <h2>Sole Proprietorship Registration Form</h2>
+    <section class="form-section" id="form-section" style="display: none;">
+        <h2 id="form-title">Registration Form</h2>
         <p>Please complete the form below. Once submitted, the details will be sent to our WhatsApp number for quick processing.</p>
 
         <form id="registrationForm">
@@ -115,59 +187,79 @@
         <p>&copy; 2025 Kingstone Ventures | Business Registration Experts</p>
     </footer>
 
-   <script>
-    // WhatsApp form submission handler
-    document.getElementById('registrationForm').addEventListener('submit', function (e) {
-        e.preventDefault();
+    <!-- Hamburger & Form Display Script -->
+    <script>
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger-icon');
+        const navList = document.getElementById('nav-list');
+        hamburger.addEventListener('click', () => {
+            navList.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
 
-        const formData = new FormData(this);
-
-        // Define clean field labels for WhatsApp message
-        const labels = {
-            fullName: "Full Name",
-            dob: "Date of Birth",
-            placeOfBirth: "Place of Birth",
-            motherName: "Mother’s Name",
-            businessDigitalAddress: "Business Digital Address",
-            businessHouseNumber: "Business House Number",
-            businessStreet: "Business Street",
-            businessLocation: "Business Location",
-            businessDistrict: "Business District",
-            businessRegion: "Business Region",
-            residentialHouseNumber: "Residential House Number",
-            landmark: "Landmark",
-            residentialStreet: "Residential Street",
-            residentialLocation: "Residential Location",
-            residentialDistrict: "Residential District",
-            residentialRegion: "Residential Region",
-            poBox: "P.O. Box",
-            email: "Email",
-            phone: "Telephone Number",
-            whatsapp: "WhatsApp Number",
-            digitalAddress: "Digital Address",
-            businessName: "Business Name",
-            natureOfBusiness: "Nature / Activities of the Business",
-            tin: "Tax Identification Number (TIN)"
-        };
-
-        // Start WhatsApp message body
-        let message = "*Sole Proprietorship Registration Request*%0A%0A";
-
-        for (let [key, value] of formData.entries()) {
-            if (key !== "ghanaCard") {
-                let label = labels[key] || key;
-                message += `${label}: ${value}%0A`;
-            }
+        // Show Form Function
+        let selectedBusinessType = "Sole Proprietorship"; // Default value
+        function showForm(type) {
+            selectedBusinessType = type;
+            document.getElementById('form-section').style.display = 'block';
+            document.getElementById('form-title').innerText = type + ' Registration Form';
+            
+            // Smooth scroll to the form
+            document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // WhatsApp number (international format without +)
-        const whatsappNumber = "+233508640097"; // <-- Replace with actual number
-        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+        // WhatsApp form submission handler
+        document.getElementById('registrationForm').addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        // Open WhatsApp chat
-        window.open(whatsappURL, '_blank');
-    });
-</script>
+            const formData = new FormData(this);
 
+            // Define clean field labels for WhatsApp message
+            const labels = {
+                fullName: "Full Name",
+                dob: "Date of Birth",
+                placeOfBirth: "Place of Birth",
+                motherName: "Mother’s Name",
+                businessDigitalAddress: "Business Digital Address",
+                businessHouseNumber: "Business House Number",
+                businessStreet: "Business Street",
+                businessLocation: "Business Location",
+                businessDistrict: "Business District",
+                businessRegion: "Business Region",
+                residentialHouseNumber: "Residential House Number",
+                landmark: "Landmark",
+                residentialStreet: "Residential Street",
+                residentialLocation: "Residential Location",
+                residentialDistrict: "Residential District",
+                residentialRegion: "Residential Region",
+                poBox: "P.O. Box",
+                email: "Email",
+                phone: "Telephone Number",
+                whatsapp: "WhatsApp Number",
+                digitalAddress: "Digital Address",
+                businessName: "Business Name",
+                natureOfBusiness: "Nature / Activities of the Business",
+                tin: "Tax Identification Number (TIN)"
+            };
+
+            // Start WhatsApp message body with normal newlines (\n)
+            let message = `*${selectedBusinessType} Registration Request*\n\n`;
+
+            for (let [key, value] of formData.entries()) {
+                if (key !== "ghanaCard") { // Don't send file data in text
+                    let label = labels[key] || key;
+                    message += `${label}: ${value}\n`;
+                }
+            }
+
+            // WhatsApp number (international format without +)
+            const whatsappNumber = "233508640097"; 
+            // Use encodeURIComponent once to safely send the whole string with spaces and newlines
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+            // Open WhatsApp chat
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
 </body>
 </html>
