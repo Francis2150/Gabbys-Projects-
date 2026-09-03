@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin Panel</title>
-  <!-- Removed admin.js from here to prevent conflicts. We will use the inline script below -->
 
   <style>
     body {
@@ -194,8 +193,8 @@
 
   <!-- Firebase Setup & Logic -->
   <script type="module">
-    // FIXED PATH: firebase-config.js is in the root, not in scripts/
-    import { db } from './firebase-config.js';
+    // FIXED PATH: firebase-config.js is inside the scripts folder
+    import { db } from './scripts/firebase-config.js';
     import { collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     // --- LOGIN LOGIC ---
