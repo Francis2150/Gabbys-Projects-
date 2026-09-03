@@ -51,9 +51,9 @@
 <script src="scripts/cart.js"></script>
 
 <!-- Module script to fetch data from Firebase -->
-<!-- Module script to fetch data from Firebase -->
 <script type="module">
-  import { db } from './firebase-config.js';
+  // FIXED PATH: firebase-config.js is inside the scripts folder
+  import { db } from './scripts/firebase-config.js';
   import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const productContainer = document.getElementById('product-container');
